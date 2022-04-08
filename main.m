@@ -23,26 +23,14 @@ start_points=[row';column'];%转置
 %%
 %start_pointstaic = start_pointstaics;
 [D_staic,S] = perform_fast_marching(W_static, start_points);% 
-figure
-imshow(D_staic);
-title("D_staic");
 
 U=rescale(D_staic);%归一化
-% figure;
-% subplot(2,1,1);
-% imshow(D_staic);
-% subplot(2,1,2);
-% imshow(U);
 %%
 % display
 U(W_static==0.001)=0;
 U=rescale(U);
 A = convert_distance_color(U);
 
-%%
-figure
-clf; hold on; 
-imageplot(A); axis image; axis off;
 
 start_points2=[10;490];
 [D_staic2,S] = perform_fast_marching(U, start_points2);
@@ -57,13 +45,7 @@ paths{i} = compute_geodesic(D_staic2,end_points(:,i));
 if length(paths{i}(:))==2
     paths{i} = paths{i-1};
 end
-ms = 30; lw = 3;
 A = convert_distance_color(D_staic2);
-figure;
-subplot(2,1,1);
-imageplot(A); title("imageplot ")
-subplot(2,1,2);
-imshow(A);title("imshow ")
 
 figure
 clf; %清除图窗 
@@ -71,7 +53,7 @@ imageplot(A); title("distance_color");
 axis image; axis off;
 hold on;
 h = plot( paths{i}(2,:), paths{i}(1,:), 'k' );
-set(h, 'LineWidth', lw);
+set(h, 'LineWidth', 3);
 path{1}=paths;
 
 saveas(gcf, [ 'result\',name '-geodesics.png'], 'png');
@@ -80,6 +62,7 @@ figure
 Z=D_staic2;
 %Z(W_static==0.001)=0;
 mesh(x,y,A(:,:,1)');
+view(90,80);
 %% 加载图片
 function [M,W] = load_potential_map(name, n, options)
 options.null = 0;
