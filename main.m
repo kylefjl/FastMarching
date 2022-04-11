@@ -9,7 +9,7 @@
 clear all; clc;
 close all;
 n = 500;
-addpath('fun','img');
+addpath('img');
 name = 'map';
 [M_static,W_static] = load_potential_map('map', n);%这个先不用在意 ？
 %%
